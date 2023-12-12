@@ -1,58 +1,71 @@
-function extractSrc() {
-    const htmlCode = document.getElementById('htmlCode').value;
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlCode;
+$(document).ready(function () {
+    $('#copyBtn').prop('disabled', true); // Initially disable the copy button
 
-    const iframes = tempDiv.querySelectorAll('iframe');
-    const allLinks = document.getElementById('allLinks');
-    allLinks.innerHTML = ''; // Clear previous links
+    $('#extractBtn').on('click', function () {
+        const htmlCode = $('#htmlCode').val();
+        const tempDiv = $('<div></div>').html(htmlCode);
 
-    if (iframes.length > 0) {
-        let count = 1;
-        iframes.forEach(function(iframe) {
-            const src = iframe.getAttribute('src');
-            if (src) {
-                const linkContainer = document.createElement('div');
-                const numberElement = document.createElement('span');
-                numberElement.textContent = count + '. ';
-                linkContainer.appendChild(numberElement);
+        const iframes = tempDiv.find('iframe');
+        const allLinks = $('#allLinks');
+        allLinks.empty(); // Clear previous links
+        if (iframes.length > 0) {
+            let count = 1;
+            iframes.each(function () {
+                const src = $(this).attr('src');
+                if (src) {
+                    const linkContainer = $('<div></div>');
+                    const numberElement = $('<span></span>').text(count + '. ');
+                    linkContainer.append(numberElement);
 
-                const aElement = document.createElement('a');
-                aElement.textContent = src;
-                aElement.href = src;
-                aElement.target = "_blank"; // Open link in a new tab
-                linkContainer.appendChild(aElement);
+                    const aElement = $('<a></a>').text(src).css({
+                        'display': 'block',
+                        'overflow': 'hidden',
+                        'text-overflow': 'ellipsis',
+                        'white-space': 'nowrap',
+                        'width': '100%',
+                        'max-width': '100%'
+                    });
+                    aElement.attr('href', src);
+                    aElement.attr('target', '_blank');
+                    linkContainer.append(aElement);
 
-                allLinks.appendChild(linkContainer);
-                allLinks.appendChild(document.createElement('br'));
-                count++;
-            }
-        });
-    } else {
-        allLinks.textContent = 'No iframe elements with src found.';
-    }
-}
-
-function copyText() {
-    const allLinks = document.getElementById('allLinks');
-    const linkContainers = allLinks.querySelectorAll('div');
-
-    let textToCopy = '';
-
-    // Loop through each link container and build the list with counts
-    linkContainers.forEach(function(linkContainer, index) {
-        const linkText = linkContainer.querySelector('a').textContent;
-        textToCopy += (index + 1) + '. ' + linkText + '\n'; // Adding count before each link
+                    allLinks.append(linkContainer);
+                    allLinks.append('<br>');
+                    count++;
+                }
+            });
+            $('#copyBtn').prop('disabled', false); // Enable the copy button if valid content is present
+        } else {
+            allLinks.text('No iframe elements with src found.');
+            $('#copyBtn').prop('disabled', true); // Disable the copy button if no valid content
+        }
     });
 
-    // Create a textarea to copy text
-    const textArea = document.createElement('textarea');
-    textArea.value = textToCopy.trim(); // Trim extra whitespace
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
+    $('#copyBtn').on('click', function () {
+        const linkContainers = $('#allLinks').find('div');
+        let textToCopy = '';
 
-    alert('Text copied to clipboard');
-}
+        linkContainers.each(function (index) {
+            const linkText = $(this).find('a').text();
+            textToCopy += (index + 1) + '. ' + linkText + '\n'; // Adding count before each link
+        });
 
+        if (textToCopy.trim() !== '') {
+            const textArea = $('<textarea></textarea>');
+            textArea.val(textToCopy.trim()); // Trim extra whitespace
+            $('body').append(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+
+            alert('Text copied to clipboard');
+        }
+    });
+
+    // Click event for the Clear Text button
+    $('#clearBtn').on('click', function () {
+        $('#allLinks').empty();
+        $('#htmlCode').val('');
+        $('#copyBtn').prop('disabled', true); // Disable the copy button on clear
+    });
+});

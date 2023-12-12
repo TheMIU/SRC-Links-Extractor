@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>SRC Links Extractor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Added viewport meta tag -->
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #htmlCode,
+        #allLinks {
+            min-height: 200px;
+        }
+    </style>
 </head>
-<body>
-    <textarea id="htmlCode" rows="10" cols="50" placeholder="Paste your HTML code here"></textarea><br>
-    <button onclick="extractSrc()">Extract SRC Links</button>
-    <button onclick="copyText()">Copy Text</button>
 
-    <div id="allLinks"></div>
+<body>
+    <div class="container p-5">
+        <h3 class="text-center">SRC Links Extractor</h6>
+        <div class="row">
+            <div class="col-md-12 col-lg-12"> 
+                <textarea id="htmlCode" class="form-control" rows="10"
+                    placeholder="Paste your HTML code here"></textarea><br>
+            </div>
+            <div class="col d-flex">
+                <button id="extractBtn" class="btn btn-primary btn-block">Extract SRC Links</button>
+                <div class="pr-2"></div>
+                <button id="copyBtn" class="btn btn-success btn-block">Copy Text</button>
+                <div class="pr-2"></div>
+                <button id="clearBtn" class="btn btn-danger btn-block">Clear Text</button>
+            </div>
+            <div class="col-md-12 col-lg-12 w-100">
+                <div id="allLinks"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
     <script src="jquery-3.7.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- script -->
     <script src="script.js"></script>
 </body>
+
 </html>
