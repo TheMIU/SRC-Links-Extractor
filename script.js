@@ -1,7 +1,8 @@
 $(document).ready(function () {
     $('#copyBtn').prop('disabled', true); // Initially disable the copy button
 
-    $('#extractBtn').on('click', function () {
+    // SRC links
+    $('#extractSrcBtn').on('click', function () {
         const htmlCode = $('#htmlCode').val();
         const tempDiv = $('<div></div>').html(htmlCode);
 

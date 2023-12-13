@@ -4,34 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <title>SRC Links Extractor</title>
+    <link rel="icon" href="fav.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Added viewport meta tag -->
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <style>
-        #htmlCode,
-        #allLinks {
-            min-height: 200px;
+        * {
+            font-family: 'Space Grotesk', sans-serif;
         }
     </style>
 </head>
 
-<body>
-    <div class="container p-5">
-        <h3 class="text-center">SRC Links Extractor</h6>
+<body class="bg-light">
+    <div class="container p-3">
+        <!-- text -->
+        <h3 class="text-center">SRC Links Extractor</h3>
+        <hr>
+        <p><b>This tool will extract src links from HTML code in one click.</b></p>
+        <ol>
+            <li>Go to the browser inspector.</li>
+            <li>Copy the element or the entire HTML document.</li>
+            <li>Press Extract & Copy Links.</li>
+        </ol>
+        <p>* This tool supports only src links within iframe elements.</p>
+
+        <!-- input area and buttons -->
         <div class="row">
-            <div class="col-md-12 col-lg-12"> 
+            <div class="col-md-12 col-lg-12">
                 <textarea id="htmlCode" class="form-control" rows="10"
                     placeholder="Paste your HTML code here"></textarea><br>
             </div>
             <div class="col d-flex">
-                <button id="extractBtn" class="btn btn-primary btn-block">Extract SRC Links</button>
+                <button id="extractSrcBtn" class="btn btn-primary btn-block">Extract SRC Links</button>
                 <div class="pr-2"></div>
                 <button id="copyBtn" class="btn btn-success btn-block">Copy Text</button>
                 <div class="pr-2"></div>
                 <button id="clearBtn" class="btn btn-danger btn-block">Clear Text</button>
             </div>
-            <div class="col-md-12 col-lg-12 w-100">
-                <div id="allLinks"></div>
+            <div class="col-md-12 col-lg-12 w-100 p-4">
+                <div id="allLinks" style="min-height: 0;"></div>
             </div>
         </div>
     </div>
